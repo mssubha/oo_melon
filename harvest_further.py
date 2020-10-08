@@ -99,30 +99,18 @@ class Melon(object):
     def is_sellable(self):
         return self.color_rating > 5 and self.shape_rating > 5 and self.harvested_from != 3
 
-def make_melons(melon_types):
+def make_melons(melon_types,logfile):
     """Returns a list of Melon objects."""
     harvest_list = []
     melon_ids = make_melon_type_lookup(melon_types)
 
-    new_melon1 = Melon(melon_ids['yw'], 8, 7, 2, "Sheila")
-    harvest_list.append(new_melon1)
-    new_melon2 = Melon(melon_ids['yw'], 3, 4, 2, "Sheila")
-    harvest_list.append(new_melon2)
-    new_melon3 = Melon(melon_ids['yw'], 9, 8, 3, "Sheila")
-    harvest_list.append(new_melon3)
-    new_melon4 = Melon(melon_ids['cas'], 10, 6, 35, "Sheila")
-    harvest_list.append(new_melon4)
-    new_melon5 = Melon(melon_ids['cren'], 8, 9, 35, "Michael")
-    harvest_list.append(new_melon5)
-    new_melon6 = Melon(melon_ids['cren'], 8, 2, 35, "Michael")
-    harvest_list.append(new_melon6)
-    new_melon7 = Melon(melon_ids['cren'], 2, 3, 4, "Michael")
-    harvest_list.append(new_melon7)
-    new_melon8 = Melon(melon_ids['musk'], 6, 7, 4, "Michael")
-    harvest_list.append(new_melon8)
-    new_melon9 = Melon(melon_ids['yw'], 7, 10, 3, "Sheila")
-    harvest_list.append(new_melon9)
-
+    melon_file = open(logfile)
+    for line in melon_file:
+        line = line.rstrip().split(" ")
+        
+        new_melon = Melon(melon_ids[line[5]], int(line[1]), int(line[3]), int(line[11]), line[8])
+        harvest_list.append(new_melon)
+        
     return harvest_list
 
 
@@ -140,8 +128,8 @@ def get_sellability_report(melons):
 
 
 
-all_melons = make_melon_types()
-all_harvest_melons = make_melons(all_melons)
+all_melons = make_melon_types() # Parent Class
+all_harvest_melons = make_melons(all_melons,"harvest_log.txt")
 get_sellability_report(all_harvest_melons)
 
 #print(all_harvest_melons)
