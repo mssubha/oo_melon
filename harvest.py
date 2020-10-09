@@ -77,7 +77,7 @@ def make_melon_type_lookup(melon_types):
         #                                 'is_seedless': melon.is_seedless, 'bestseller': melon.is_bestseller,
         #                                 'pairs_with': melon.pairings}
         melon_dictionary[melon.code] = melon
-    
+        #print (melon_dictionary[melon.code].color)
     return melon_dictionary
         
 
@@ -130,22 +130,36 @@ def get_sellability_report(melons):
     """Given a list of melon object, prints whether each one is sellable."""
     # Harvested by Sheila from Field 2 
     # Harvested by Sheila from Field 2 (NOT SELLABLE)
+
     for each_melon in melons:
         if each_melon.is_sellable():
             sell_message = "(CAN BE SOLD)"
         else:
             sell_message = "(NOT SELLABLE)"
+        
+        print(f'{each_melon.melon_type.name} harvested by {each_melon.harvested_by} from Field {each_melon.harvested_from} {sell_message}')
+        print(f'Color of the melon is {each_melon.melon_type.color}')
 
-        print(f'Harvested by {each_melon.harvested_by} from Field {each_melon.harvested_from} {sell_message}')
+
+basic_melon_types = make_melon_types() # list
+# print(basic_melon_types)
+# for melon in basic_melon_types:
+#     print(melon.color)
 
 
+melon_lookup_objects = make_melon_type_lookup(basic_melon_types)  # dictionary
+# for key,value in melon_lookup_objects.items():
+#     print(f"Key is {key} and the value is {value}") # key is the melontype and value is melon_type object
+#     print(type(key), type(value))
+#     print (value.color)
 
-all_melons = make_melon_types()
-all_harvest_melons = make_melons(all_melons)
+all_harvest_melons = make_melons(basic_melon_types)  # list of Melon class objects
+#for melon in all_harvest_melons:
+    #print(melon.melon_type)
+    #type(melon.melon_type) # Melon type object
+    #print(melon.melon_type.color)
+
 get_sellability_report(all_harvest_melons)
 
-#print(all_harvest_melons)
-#print_pairing_info(all_melons)
-#print(make_melon_type_lookup(all_melons))
 
 
